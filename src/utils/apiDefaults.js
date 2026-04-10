@@ -1,7 +1,6 @@
 import heroPlaceholder from '../assets/inner-about.jpeg';
 import serviceCardPlaceholder from '../assets/about-image.jpeg';
 import serviceInnerPlaceholder from '../assets/inner-about.jpeg';
-import partnerLogoPlaceholder from '../assets/logo-su.jpeg';
 import coursePlaceholder from '../assets/bls.jpeg';
 import certificationPlaceholder from '../assets/nebosh.jpeg';
 
@@ -48,7 +47,7 @@ const DEFAULTS = {
       _id: 'dummy-partner',
       id: 'dummy-partner',
       name: 'Medical Partner',
-      logoUrl: partnerLogoPlaceholder,
+      logoUrl: '/logo.jpeg',
       link: 'https://example.com',
       sortOrder: 0,
       isActive: true,

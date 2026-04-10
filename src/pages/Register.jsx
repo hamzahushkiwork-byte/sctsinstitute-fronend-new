@@ -19,8 +19,10 @@ function Register() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [emailWarning, setEmailWarning] = useState('');
+  const [emailSuccess, setEmailSuccess] = useState('');
   const { register, isAuthenticated, user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
+  const REDIRECT_AFTER_SIGNUP_MS = 2800;
 
   // Redirect if already authenticated
   useEffect(() => {
@@ -39,11 +41,15 @@ function Register() {
       [e.target.name]: e.target.value,
     });
     setError('');
+    setEmailWarning('');
+    setEmailSuccess('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setEmailWarning('');
+    setEmailSuccess('');
 
     // Validate passwords match
     if (formData.password !== formData.confirmPassword) {
@@ -63,19 +69,23 @@ function Register() {
         password,
       });
 
-      // Check if email was sent
-      if (result.emailSent === false) {
-        setEmailWarning('Account created, but welcome email could not be sent.');
-        setLoading(false);
-        // Still redirect after a short delay to show the warning
-        setTimeout(() => {
-          navigate('/');
-        }, 3000);
+      setLoading(false);
+
+      if (result.emailSent === true) {
+        setEmailSuccess(
+          result.message ||
+            'Account created. Check your inbox and spam folder for a welcome email with a link to sign in.',
+        );
       } else {
-        setLoading(false);
-        // Redirect to home page after registration
-        navigate('/');
+        setEmailWarning(
+          result.message ||
+            'Account created, but the welcome email could not be sent. The site email (SMTP) settings may need to be checked.',
+        );
       }
+
+      setTimeout(() => {
+        navigate('/');
+      }, REDIRECT_AFTER_SIGNUP_MS);
     } catch (err) {
       setError(err.message || 'Registration failed. Please try again.');
       setLoading(false);
@@ -96,6 +106,7 @@ function Register() {
           <p className="auth-subtitle">Sign up to get started with your account.</p>
 
           {error && <div className="auth-error">{error}</div>}
+          {emailSuccess && <div className="auth-success">{emailSuccess}</div>}
           {emailWarning && <div className="auth-warning">{emailWarning}</div>}
 
           <form onSubmit={handleSubmit} className="auth-form">

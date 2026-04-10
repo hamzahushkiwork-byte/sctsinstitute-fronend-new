@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from 'react'
 import { NavLink, useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext.jsx'
 import '../styles/header.css'
-import logoImage from '../assets/logo-su.jpeg'
+
+const SITE_LOGO_SRC = '/logo.jpeg'
 
 function Header() {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
@@ -123,7 +124,7 @@ function Header() {
         <div className="header-inner">
           <div className="logo-container">
             <Link to="/" aria-label="Go to home page">
-              <img src={logoImage} alt="SAUDI-CANADIAN TRAINING & SIMULATION CENTER" className="header-logo" />
+              <img src={SITE_LOGO_SRC} alt="SAUDI-CANADIAN TRAINING & SIMULATION CENTER" className="header-logo" />
             </Link>
           </div>
 
@@ -229,7 +230,7 @@ function Header() {
         {/* Side Menu Header */}
         <div className="side-menu-header">
           <div className="side-menu-brand">
-            <img src={logoImage} alt="SAUDI-CANADIAN TRAINING & SIMULATION CENTER" className="circle-logo" />
+            <img src={SITE_LOGO_SRC} alt="SAUDI-CANADIAN TRAINING & SIMULATION CENTER" className="circle-logo" />
             <div className="side-menu-brand-text">
               <div className="side-menu-title">SAUDI-CANADIAN TRAINING & SIMULATION CENTER</div>
           

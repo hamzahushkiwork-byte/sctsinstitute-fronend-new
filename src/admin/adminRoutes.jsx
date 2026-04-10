@@ -12,6 +12,7 @@ import PagesPage from './pages/PagesPage.jsx';
 import ContactsPage from './pages/ContactsPage.jsx';
 import UsersList from './pages/Users/UsersList.jsx';
 import CourseRegistrationsList from './pages/CourseRegistrations/CourseRegistrationsList.jsx';
+import BroadcastEmailsPage from './pages/BroadcastEmails/BroadcastEmailsPage.jsx';
 
 export default function AdminRoutes() {
   return (
@@ -32,6 +33,7 @@ export default function AdminRoutes() {
           <Route path="pages" element={<PagesPage />} />
           <Route path="contacts" element={<ContactsPage />} />
           <Route path="users" element={<UsersList />} />
+          <Route path="broadcast-emails" element={<BroadcastEmailsPage />} />
           <Route path="course-registrations" element={<CourseRegistrationsList />} />
         </Route>
       </Route>

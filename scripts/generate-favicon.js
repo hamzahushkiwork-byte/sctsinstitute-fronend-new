@@ -6,7 +6,7 @@ import { existsSync } from 'fs'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
-const logoPath = join(__dirname, '../src/assets/logo.jpeg')
+const logoPath = join(__dirname, '../public/logo.jpeg')
 const faviconPath = join(__dirname, '../public/favicon.png')
 
 async function generateFavicon() {

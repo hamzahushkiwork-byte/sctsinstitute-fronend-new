@@ -48,12 +48,21 @@ export default function CourseRegistrationsList() {
 
   const handleStatusChange = async () => {
     try {
-      await courseRegistrationAPI.updateRegistrationStatus(
+      const updated = await courseRegistrationAPI.updateRegistrationStatus(
         selectedId,
         statusForm.status,
         statusForm.notes
       );
-      showSnackbar('Status updated successfully', 'success');
+      if (updated?.emailSent === false) {
+        showSnackbar(
+          'Status saved, but the user could not be notified by email. Check server email (SMTP) settings.',
+          'warning'
+        );
+      } else if (updated?.emailSent === true) {
+        showSnackbar('Status updated and notification email sent to the user.', 'success');
+      } else {
+        showSnackbar('Status updated successfully.', 'success');
+      }
       setStatusDialogOpen(false);
       setAnchorEl(null);
       loadRegistrations();
@@ -123,28 +132,23 @@ export default function CourseRegistrationsList() {
     }
   };
 
+  /** MUI X DataGrid v6+ valueGetter: (value, row, column, apiRef) — not a single params object. */
   const columns = [
     {
       field: 'course',
       headerName: 'Course',
       flex: 1,
-      valueGetter: (params) => {
+      valueGetter: (_value, row) => {
         try {
-          if (!params?.row) return 'N/A';
-          const course = params.row.courseId;
-          
-          // Check if course is a populated object with title
+          if (!row) return 'N/A';
+          const course = row.courseId;
           if (course && typeof course === 'object' && !Array.isArray(course)) {
-            if (course.title) {
-              return course.title;
-            }
-            // Check if it's a Mongoose document with toObject
-            if (course.toObject && typeof course.toObject === 'function') {
+            if (course.title) return course.title;
+            if (typeof course.toObject === 'function') {
               const courseObj = course.toObject();
-              return courseObj.title || 'N/A';
+              return courseObj?.title || 'N/A';
             }
           }
-          
           return 'N/A';
         } catch (error) {
           console.error('Error getting course:', error);
@@ -156,21 +160,16 @@ export default function CourseRegistrationsList() {
       field: 'user',
       headerName: 'User',
       flex: 1,
-      valueGetter: (params) => {
+      valueGetter: (_value, row) => {
         try {
-          if (!params?.row) return 'N/A';
-          const user = params.row.userId;
-          
-          // Check if user is a populated object
+          if (!row) return 'N/A';
+          const user = row.userId;
           if (user && typeof user === 'object' && !Array.isArray(user)) {
-            // Check if it's a Mongoose document with toObject
-            if (user.toObject && typeof user.toObject === 'function') {
-              const userObj = user.toObject();
-              return getUserName(userObj);
+            if (typeof user.toObject === 'function') {
+              return getUserName(user.toObject());
             }
             return getUserName(user);
           }
-          
           return 'N/A';
         } catch (error) {
           console.error('Error getting user:', error);
@@ -182,20 +181,16 @@ export default function CourseRegistrationsList() {
       field: 'email',
       headerName: 'Email',
       flex: 1,
-      valueGetter: (params) => {
+      valueGetter: (_value, row) => {
         try {
-          if (!params?.row) return 'N/A';
-          const user = params.row.userId;
-          
+          if (!row) return 'N/A';
+          const user = row.userId;
           if (user && typeof user === 'object' && !Array.isArray(user)) {
-            // Check if it's a Mongoose document
-            if (user.toObject && typeof user.toObject === 'function') {
-              const userObj = user.toObject();
-              return userObj.email || 'N/A';
+            if (typeof user.toObject === 'function') {
+              return user.toObject()?.email || 'N/A';
             }
             return user.email || 'N/A';
           }
-          
           return 'N/A';
         } catch (error) {
           console.error('Error getting email:', error);
@@ -207,20 +202,16 @@ export default function CourseRegistrationsList() {
       field: 'phone',
       headerName: 'Phone',
       flex: 1,
-      valueGetter: (params) => {
+      valueGetter: (_value, row) => {
         try {
-          if (!params?.row) return 'N/A';
-          const user = params.row.userId;
-          
+          if (!row) return 'N/A';
+          const user = row.userId;
           if (user && typeof user === 'object' && !Array.isArray(user)) {
-            // Check if it's a Mongoose document
-            if (user.toObject && typeof user.toObject === 'function') {
-              const userObj = user.toObject();
-              return userObj.phoneNumber || 'N/A';
+            if (typeof user.toObject === 'function') {
+              return user.toObject()?.phoneNumber || 'N/A';
             }
             return user.phoneNumber || 'N/A';
           }
-          
           return 'N/A';
         } catch (error) {
           console.error('Error getting phone:', error);
@@ -245,8 +236,8 @@ export default function CourseRegistrationsList() {
       headerName: 'Session date',
       width: 160,
       sortable: false,
-      valueGetter: (params) => {
-        const label = formatChosenSessionDate(params?.row);
+      valueGetter: (_value, row) => {
+        const label = formatChosenSessionDate(row);
         return label || '—';
       },
     },

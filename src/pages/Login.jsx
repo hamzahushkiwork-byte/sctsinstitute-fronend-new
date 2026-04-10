@@ -78,9 +78,14 @@ function Login() {
             </div>
 
             <div className="auth-form-group">
-              <label htmlFor="password" className="auth-label">
-                Password
-              </label>
+              <div className="auth-label-row">
+                <label htmlFor="password" className="auth-label">
+                  Password
+                </label>
+                <Link to="/forgot-password" className="auth-link auth-link-forgot">
+                  Forgot password?
+                </Link>
+              </div>
               <div className="password-input-wrapper">
                 <input
                   type={showPassword ? 'text' : 'password'}

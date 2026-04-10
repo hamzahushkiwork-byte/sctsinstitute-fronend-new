@@ -51,12 +51,12 @@
 }
 
 .header-logo {
-  height: 130px;
-  width: auto;
-  object-fit: contain;
+  height: 85px;
+  width: 261px;
+  object-fit: cover;
   /* max-height: 70px; */
   display: block;
-  border-radius: 27%;
+  border-radius: 169px;
 }
 
 /* Desktop Navigation */

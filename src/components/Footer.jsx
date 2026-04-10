@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom'
-import logoImage from '../assets/logo-su.jpeg'
 import '../styles/footer.css'
+
+const SITE_LOGO_SRC = '/logo.jpeg'
 
 function Footer() {
   return (
@@ -9,7 +10,7 @@ function Footer() {
         {/* Top Row */}
         <div className="footer-top">
           <div className="footer-logo-container">
-            <img src={logoImage} alt="SAUDI-CANADIAN TRAINING & SIMULATION CENTER" className="footer-logo" />
+            <img src={SITE_LOGO_SRC} alt="SAUDI-CANADIAN TRAINING & SIMULATION CENTER" className="footer-logo" />
           </div>
           <p className="footer-text">
           King Fahad Road,

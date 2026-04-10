@@ -25,7 +25,13 @@ export async function register(userData) {
       setTokens({ accessToken, refreshToken });
       setUserData(user);
       
-      return { user, accessToken, refreshToken, emailSent, message: response.data.message };
+      return {
+        user,
+        accessToken,
+        refreshToken,
+        emailSent: emailSent === true,
+        message: response.data.message || '',
+      };
     }
     
     throw new Error(response.data?.message || 'Registration failed');
@@ -83,5 +89,45 @@ export async function logout() {
   } finally {
     // Clear local storage
     clearTokens();
+  }
+}
+
+/**
+ * Request a 6-digit password reset code by email.
+ * @param {{ email: string }} payload
+ * @returns {Promise<{ message: string }>}
+ */
+export async function forgotPassword(payload) {
+  try {
+    const response = await axios.post(`${baseURL}/auth/forgot-password`, payload);
+    if (response.data?.success) {
+      return { message: response.data.message || '' };
+    }
+    throw new Error(response.data?.message || 'Request failed');
+  } catch (error) {
+    if (error.response?.data?.message) {
+      throw new Error(error.response.data.message);
+    }
+    throw error;
+  }
+}
+
+/**
+ * Set a new password using the emailed OTP.
+ * @param {{ email: string, otp: string, password: string }} payload
+ * @returns {Promise<{ message: string }>}
+ */
+export async function resetPassword(payload) {
+  try {
+    const response = await axios.post(`${baseURL}/auth/reset-password`, payload);
+    if (response.data?.success) {
+      return { message: response.data.message || '' };
+    }
+    throw new Error(response.data?.message || 'Reset failed');
+  } catch (error) {
+    if (error.response?.data?.message) {
+      throw new Error(error.response.data.message);
+    }
+    throw error;
   }
 }

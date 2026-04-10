@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import '../styles/page-loader.css';
-import logo from '../assets/logo-su.jpeg';
+import loaderLogo from '../assets/logo-su.jpeg';
 
 const PageLoader = ({ isVisible }) => {
     React.useEffect(() => {
@@ -35,7 +35,7 @@ const PageLoader = ({ isVisible }) => {
                         <div className="loader-logo-wrapper">
                             <div className="loader-circle"></div>
                             <div className="loader-circle-inner"></div>
-                            <img src={logo} alt="SCTS Logo" className="loader-logo" />
+                            <img src={loaderLogo} alt="SCTS Logo" className="loader-logo" />
                         </div>
                         <motion.div
                             className="loader-text"

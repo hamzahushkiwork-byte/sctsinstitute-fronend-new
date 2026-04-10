@@ -25,6 +25,7 @@ import {
   Article,
   Mail,
   People,
+  Campaign,
   Assignment,
   Logout,
 } from '@mui/icons-material';
@@ -44,6 +45,7 @@ const menuItems = [
   { text: 'Pages', icon: <Article />, path: '/admin/pages' },
   { text: 'Contacts', icon: <Mail />, path: '/admin/contacts' },
   { text: 'Users', icon: <People />, path: '/admin/users' },
+  { text: 'Email all users', icon: <Campaign />, path: '/admin/broadcast-emails' },
   { text: 'Course Registrations', icon: <Assignment />, path: '/admin/course-registrations' },
 ];
 

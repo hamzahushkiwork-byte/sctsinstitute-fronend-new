@@ -12,7 +12,7 @@ import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { fetchHeroSlides } from '../api/endpoints'
 import { toAbsoluteMediaUrl } from '../utils/mediaUrl'
-import logo from '../assets/logo-su.jpeg'
+import loaderLogo from '../assets/logo-su.jpeg'
 import 'swiper/css'
 import 'swiper/css/effect-fade'
 import 'swiper/css/pagination'
@@ -224,7 +224,7 @@ function HeroSlider() {
         <div className="loader-container">
           <div className="loader-logo-wrapper" style={{ width: '80px', height: '80px' }}>
             <div className="loader-circle"></div>
-            <img src={logo} alt="Loading" className="loader-logo" />
+            <img src={loaderLogo} alt="Loading" className="loader-logo" />
           </div>
           <div className="loader-progress-bar" style={{ width: '120px' }}>
             <div className="loader-progress-fill"></div>

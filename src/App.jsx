@@ -15,6 +15,8 @@ import CertificationDetails from "./pages/CertificationDetails";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ForgotPassword from "./pages/ForgotPassword";
+import DevEmailTest from "./pages/DevEmailTest.jsx";
 import AdminRoutes from "./admin/adminRoutes.jsx";
 
 // Component to handle admin route redirects
@@ -56,6 +58,10 @@ function App() {
           {/* Auth routes - no layout */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          {import.meta.env.DEV && (
+            <Route path="/dev/email-test" element={<DevEmailTest />} />
+          )}
 
           {/* Admin routes */}
           <Route path="/admin/*" element={<AdminRouteHandler />} />

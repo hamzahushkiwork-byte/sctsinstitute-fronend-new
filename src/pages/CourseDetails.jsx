@@ -72,6 +72,13 @@ function registrationSessionKey(reg) {
   return null;
 }
 
+/** API / DB may vary casing or field names */
+function isRejectedRegistration(reg) {
+  if (!reg || typeof reg !== "object") return false;
+  const raw = reg.status ?? reg.Status ?? reg.registrationStatus;
+  return String(raw ?? "").toLowerCase().trim() === "rejected";
+}
+
 
 
 function CourseDetails() {
@@ -94,6 +101,9 @@ function CourseDetails() {
   const [calendarMonth, setCalendarMonth] = useState(() => new Date());
   const [registerModalOpen, setRegisterModalOpen] = useState(false);
   const [registerModalDateKey, setRegisterModalDateKey] = useState(null);
+
+  const isRegistrationRejected = isRejectedRegistration(registration);
+
   const checkRegistrationStatus = useCallback(
     async (courseId) => {
       if (!isAuthenticated || !courseId) {
@@ -224,7 +234,9 @@ function CourseDetails() {
       if (!registration) setSelectedDate(null);
       return;
     }
-    const regKey = registrationSessionKey(registration);
+    const regKey = isRegistrationRejected
+      ? null
+      : registrationSessionKey(registration);
     if (regKey) {
       const d = keyToLocalDate(regKey);
       if (d) {
@@ -243,6 +255,7 @@ function CourseDetails() {
     registration?.sessionDateKey,
     registration?.sessionDate,
     registration?._id,
+    isRegistrationRejected,
   ]);
 
   const handlePaymentClick = (type) => {
@@ -267,6 +280,8 @@ function CourseDetails() {
     setRegistering(true);
     setRegistrationMessage("");
 
+    const wasRejected = isRejectedRegistration(registration);
+
     try {
       const newRegistration = await registerForCourse(
         course._id,
@@ -279,7 +294,9 @@ function CourseDetails() {
         }
         setRegistration(newRegistration);
         setRegistrationMessage(
-          "Successfully registered for this course! Status: Pending",
+          wasRejected
+            ? "New session date submitted. Your registration is pending review again."
+            : "Successfully registered for this course! Status: Pending",
         );
       } else {
         // If registration failed but no error thrown, refresh status
@@ -316,10 +333,16 @@ function CourseDetails() {
     setRegisterModalOpen(true);
   };
 
-  const registeredKeyForCalendar = registrationSessionKey(registration);
+  const rejectedPreviousSessionKey = isRegistrationRejected
+    ? registrationSessionKey(registration)
+    : null;
+  const registeredKeyForCalendar = isRegistrationRejected
+    ? null
+    : registrationSessionKey(registration);
 
   const getStatusDisplay = (status) => {
-    switch (status) {
+    const s = String(status ?? "").toLowerCase().trim();
+    switch (s) {
       case "paid":
         return {
           text: "Paid ✓",
@@ -402,6 +425,21 @@ function CourseDetails() {
                           <strong>Note:</strong> {registration.notes}
                         </div>
                       )}
+                      {isRegistrationRejected && (
+                        <p
+                          className="course-rejected-hint"
+                          style={{
+                            marginTop: "12px",
+                            fontSize: "14px",
+                            lineHeight: 1.5,
+                            color: "#7c2d12",
+                          }}
+                        >
+                          {restrictToAvailable
+                            ? "You can choose another session day on the calendar and submit a new registration request."
+                            : "You can submit a new registration request using the button below."}
+                        </p>
+                      )}
                     </div>
                   ) : (
                     <button
@@ -413,6 +451,19 @@ function CourseDetails() {
                       {registering ? "Registering..." : "Register for Course"}
                     </button>
                   )}
+                  {isRegistrationRejected && !restrictToAvailable && (
+                      <button
+                        type="button"
+                        onClick={() => handleRegister()}
+                        disabled={registering}
+                        className="course-register-button"
+                        style={{ marginTop: "12px" }}
+                      >
+                        {registering
+                          ? "Submitting..."
+                          : "Submit new registration request"}
+                      </button>
+                    )}
                   {registrationMessage && (
                     <div
                       style={{
@@ -570,6 +621,13 @@ function CourseDetails() {
                         return null;
                       }
                       if (
+                        isRegistrationRejected &&
+                        rejectedPreviousSessionKey &&
+                        key === rejectedPreviousSessionKey
+                      ) {
+                        return "course-calendar-tile-previous-rejected";
+                      }
+                      if (
                         registeredKeyForCalendar &&
                         key === registeredKeyForCalendar
                       ) {
@@ -655,7 +713,9 @@ function CourseDetails() {
               ×
             </button>
             <h2 id="course-register-modal-title" className="course-register-modal-title">
-              Register for this course
+              {isRegistrationRejected
+                ? "Choose another session"
+                : "Register for this course"}
             </h2>
             {registerModalDateKey && (
               <p className="course-register-modal-date">
@@ -663,7 +723,38 @@ function CourseDetails() {
                 <strong>{registerModalDateKey}</strong>
               </p>
             )}
-            {registration ? (
+            {registration && isRegistrationRejected ? (
+              <div className="course-register-modal-body text-center">
+                <p className="course-register-modal-info">
+                  Your previous request was not approved for this course.
+                  {rejectedPreviousSessionKey && (
+                    <>
+                      {" "}
+                      Previous session day:{" "}
+                      <strong>{rejectedPreviousSessionKey}</strong>.
+                    </>
+                  )}
+                </p>
+                <p
+                  className="course-register-modal-meta"
+                  style={{ marginTop: "8px" }}
+                >
+                  Confirm the new date above, then submit to send your request
+                  for review again.
+                </p>
+                <div className="course-register-modal-actions" style={{ marginTop: "20px" }}>
+                  <button
+                    type="button"
+                    onClick={() => handleRegister(registerModalDateKey)}
+                    disabled={registering || !registerModalDateKey}
+                    className="course-register-button w-full"
+                    style={{ width: "100%" }}
+                  >
+                    {registering ? "Submitting..." : "Submit new session request"}
+                  </button>
+                </div>
+              </div>
+            ) : registration && !isRegistrationRejected ? (
               <div className="course-register-modal-body text-center">
                 <p className="course-register-modal-info">
                   You are already registered for this course.
@@ -705,7 +796,12 @@ function CourseDetails() {
             )}
             {registrationMessage && (
               <div
-                className={`course-register-modal-message ${registration ? "is-success" : "is-error"}`}
+                className={`course-register-modal-message ${
+                  registrationMessage.includes("Failed") ||
+                  registrationMessage.includes("already")
+                    ? "is-error"
+                    : "is-success"
+                }`}
                 role="status"
               >
                 {registrationMessage}

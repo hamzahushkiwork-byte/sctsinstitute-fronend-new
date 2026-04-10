@@ -27,9 +27,12 @@ export function toAbsoluteMediaUrl(path) {
   // Production: build absolute URL
   const normalizedPath = path.startsWith('/') ? path : '/' + path;
 
-  // CRITICAL: If the path starts with /assets/ it's likely a frontend asset from the build
-  // We should NOT prepend API_BASE for frontend assets
-  if (normalizedPath.startsWith('/assets/')) {
+  // Frontend static files (Vite bundle or public/), not API media — do not prepend API_BASE
+  if (
+    normalizedPath.startsWith('/assets/') ||
+    normalizedPath === '/logo.jpeg' ||
+    normalizedPath === '/favicon.png'
+  ) {
     return normalizedPath;
   }
 

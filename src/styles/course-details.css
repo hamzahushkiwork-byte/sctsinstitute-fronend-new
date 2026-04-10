@@ -202,6 +202,14 @@
   background-color: #ffffff;
 }
 
+/* Previous session after rejection (subtle dashed border) */
+.course-detail-sidebar
+  .react-calendar__tile.course-calendar-tile-previous-rejected {
+  border: 2px dashed #9a3412 !important;
+  background: rgba(254, 215, 170, 0.35) !important;
+  color: #7c2d12 !important;
+}
+
 /* Calendar → register dialog */
 .course-register-modal-backdrop {
   position: fixed;
