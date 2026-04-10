@@ -1,0 +1,28 @@
+.admin-sidebar {
+  width: 100%;
+}
+
+.admin-sidebar .MuiListItemButton-root {
+  padding: 12px 16px;
+}
+
+.admin-sidebar .MuiListItemButton-root.admin-nav-active {
+  background-color: rgba(6, 89, 71, 0.1);
+  border-right: 3px solid #065947;
+}
+
+.admin-sidebar .MuiListItemButton-root.admin-nav-active .MuiListItemText-primary {
+  font-weight: 600;
+  color: #065947;
+}
+
+.admin-sidebar .MuiListItemIcon-root {
+  min-width: 40px;
+  color: inherit;
+}
+
+.admin-sidebar .MuiListItemButton-root.admin-nav-active .MuiListItemIcon-root {
+  color: #065947;
+}
+
+
