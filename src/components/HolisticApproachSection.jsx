@@ -44,9 +44,9 @@ const HolisticApproachSection = () => {
             Through interactive workshops, advanced hands-on simulations, real-world case studies, and continuous performance assessment, we ensure every healthcare professional gains the skills, confidence, and expertise needed to excel in their field and create lasting impact on patient outcomes.
           </p>
 
-          <button className="holistic-cta">
+          {/* <button className="holistic-cta">
             Read More <span className="holistic-cta-arrow">→</span>
-          </button>
+          </button> */}
         </motion.div>
 
         {/* RIGHT FLOATING CARD */}

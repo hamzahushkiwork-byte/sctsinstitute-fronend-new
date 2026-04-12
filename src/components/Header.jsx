@@ -3,7 +3,7 @@ import { NavLink, useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext.jsx'
 import '../styles/header.css'
 
-const SITE_LOGO_SRC = '/logo.jpeg'
+const SITE_LOGO_SRC = '/logo_site.svg'
 
 function Header() {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)

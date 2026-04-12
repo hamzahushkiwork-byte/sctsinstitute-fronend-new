@@ -1,6 +1,7 @@
-import { NavLink } from 'react-router-dom'
-import logoImage from '../assets/logo.jpeg'
-import '../styles/footer.css'
+import { NavLink } from 'react-router-dom';
+import '../styles/footer.css';
+
+const SITE_LOGO_SRC = '/logo_site.svg';
 
 function Footer() {
   return (
@@ -9,7 +10,7 @@ function Footer() {
         {/* Top Row */}
         <div className="footer-top">
           <div className="footer-logo-container">
-            <img src={logoImage} alt="Kingdom of Doctors" className="footer-logo" />
+            <img src={SITE_LOGO_SRC} alt="SCTS" className="footer-logo" />
           </div>
           <p className="footer-text">
             Over the years, our commitment to excellence and innovation drives everything we do, ensuring that healthcare professionals and individuals receive the highest quality education and training to excel in their careers and deliver exceptional patient care.

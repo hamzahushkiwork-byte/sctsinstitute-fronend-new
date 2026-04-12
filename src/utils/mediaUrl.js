@@ -31,6 +31,7 @@ export function toAbsoluteMediaUrl(path) {
   if (
     normalizedPath.startsWith('/assets/') ||
     normalizedPath === '/logo.jpeg' ||
+    normalizedPath === '/logo_site.svg' ||
     normalizedPath === '/favicon.png'
   ) {
     return normalizedPath;

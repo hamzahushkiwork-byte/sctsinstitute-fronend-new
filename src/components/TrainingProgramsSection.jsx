@@ -118,9 +118,9 @@ const TrainingProgramsSection = () => {
                   {currentSlide.description}
                 </p>
 
-                <button className="training-programs-cta">
+                {/* <button className="training-programs-cta">
                   {currentSlide.ctaLabel} <span className="cta-arrow">→</span>
-                </button>
+                </button> */}
               </motion.div>
             </AnimatePresence>
 

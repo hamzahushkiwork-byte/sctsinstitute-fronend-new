@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import '../styles/footer.css'
 
-const SITE_LOGO_SRC = '/logo.jpeg'
+const SITE_LOGO_SRC = '/logo_site.svg'
 
 function Footer() {
   return (

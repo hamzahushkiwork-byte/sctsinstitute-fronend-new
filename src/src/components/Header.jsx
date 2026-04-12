@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext.jsx'
 import '../styles/header.css'
-import logoImage from '../assets/logo.jpeg'
+const SITE_LOGO_SRC = '/logo_site.svg'
 
 function Header() {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
@@ -75,7 +75,13 @@ function Header() {
       <header className={`header ${isScrolled ? 'header-scrolled' : ''}`}>
         <div className="header-inner">
           <div className="logo-container">
-            <img src={logoImage} alt="KOD Logo" className="header-logo" />
+            <Link to="/" aria-label="Go to home page">
+              <img
+                src={SITE_LOGO_SRC}
+                alt="SAUDI-CANADIAN TRAINING & SIMULATION CENTER"
+                className="header-logo"
+              />
+            </Link>
           </div>
 
           <nav className="nav-links">
@@ -170,7 +176,7 @@ function Header() {
 
         {/* Gradient Circle with Logo */}
         <div className="gradient-circle">
-          <img src={logoImage} alt="KOD Logo" className="circle-logo" />
+          <img src={SITE_LOGO_SRC} alt="SCTS" className="circle-logo" />
         </div>
 
         {/* Auth Button */}

@@ -51,12 +51,23 @@
 }
 
 .header-logo {
-  height: 85px;
-  width: 261px;
+  height: 112px;
+  width: 300px;
+  max-width: min(320px, 72vw);
   object-fit: cover;
-  /* max-height: 70px; */
   display: block;
-  border-radius: 169px;
+  border-radius: 12px;
+  /* transition: filter 0.1s ease; */
+}
+
+/* Transparent header over hero: lightened logo */
+.header:not(.header-scrolled) .header-logo {
+  filter: invert(1) grayscale(20%) brightness(33.5) ;
+}
+
+/* Solid white bar: natural logo colors */
+.header.header-scrolled .header-logo {
+  filter: none;
 }
 
 /* Desktop Navigation */

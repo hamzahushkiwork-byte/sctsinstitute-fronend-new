@@ -40,10 +40,10 @@ body:lang(ar),
 }
 
 .footer-logo {
-  height: 91px;
-  width: auto;
-  object-fit: contain;
-  border-radius: 20px;
+  height: 124px;
+  width: 242px;
+  object-fit: cover;
+  filter: invert(1) grayscale(20%) brightness(33.5);
 }
 
 .footer-text {
