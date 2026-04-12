@@ -82,6 +82,8 @@ export default function AdminCoursesList() {
     isAvailable: true, // ✅ added
     /** Sorted YYYY-MM-DD strings; sent as availableDates JSON array */
     availableDateKeys: [],
+    sessionTime: '',
+    location: '',
   });
 
   const [scheduleCalendarMonth, setScheduleCalendarMonth] = useState(() => new Date());
@@ -112,6 +114,8 @@ export default function AdminCoursesList() {
       isActive: true,
       isAvailable: true, // ✅ default
       availableDateKeys: [],
+      sessionTime: '',
+      location: '',
     });
     setScheduleCalendarMonth(new Date());
     setImageFile(null);
@@ -144,6 +148,8 @@ export default function AdminCoursesList() {
         isActive: course.isActive !== undefined ? course.isActive : true,
         isAvailable: course.isAvailable !== undefined ? course.isAvailable : true, // ✅ added
         availableDateKeys: dateKeys,
+        sessionTime: course.sessionTime || '',
+        location: course.location || '',
       });
 
       if (dateKeys.length > 0) {
@@ -188,6 +194,8 @@ export default function AdminCoursesList() {
         'availableDates',
         JSON.stringify(formData.availableDateKeys || []),
       );
+      formDataToSend.append('sessionTime', String(formData.sessionTime || ''));
+      formDataToSend.append('location', String(formData.location || ''));
 
       if (imageFile && imageFile instanceof File) {
         formDataToSend.append('image', imageFile);
@@ -430,6 +438,28 @@ export default function AdminCoursesList() {
                   multiline
                   rows={6}
                   helperText="Full description for details page (optional)"
+                />
+
+                <TextField
+                  fullWidth
+                  label="Session time"
+                  value={formData.sessionTime || ''}
+                  onChange={(e) => setFormData({ ...formData, sessionTime: e.target.value })}
+                  margin="normal"
+                  placeholder="e.g. 9:00 AM – 1:00 PM"
+                  helperText="Shown on the course page and in the confirmation email (optional)"
+                />
+
+                <TextField
+                  fullWidth
+                  label="Location"
+                  value={formData.location || ''}
+                  onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                  margin="normal"
+                  multiline
+                  rows={2}
+                  placeholder="Venue name and address"
+                  helperText="Shown on the course page and in the confirmation email (optional)"
                 />
 
                 <TextField

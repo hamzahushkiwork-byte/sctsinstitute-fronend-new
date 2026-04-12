@@ -490,6 +490,24 @@ function CourseDetails() {
               )}
             </div>
 
+            {(course.sessionTime || course.location) && (
+              <div className="course-detail-content" style={{ marginTop: "1rem" }}>
+                <h2 className="course-detail-heading">Session details</h2>
+                <div className="course-detail-paragraph" style={{ whiteSpace: "pre-line" }}>
+                  {course.sessionTime ? (
+                    <p style={{ margin: "0 0 0.5rem 0" }}>
+                      <strong>Time:</strong> {course.sessionTime}
+                    </p>
+                  ) : null}
+                  {course.location ? (
+                    <p style={{ margin: 0 }}>
+                      <strong>Location:</strong> {course.location}
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+            )}
+
             {course.description && (
               <div className="course-detail-content">
                 <div

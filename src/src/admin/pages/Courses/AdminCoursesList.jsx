@@ -40,6 +40,8 @@ export default function AdminCoursesList() {
     sortOrder: 0,
     isActive: true,
     isAvailable: true,
+    sessionTime: '',
+    location: '',
   });
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState('');
@@ -65,6 +67,8 @@ export default function AdminCoursesList() {
       sortOrder: 0,
       isActive: true,
       isAvailable: true,
+      sessionTime: '',
+      location: '',
     });
     setImageFile(null);
     setImagePreview('');
@@ -93,6 +97,8 @@ export default function AdminCoursesList() {
         sortOrder: course.sortOrder || 0,
         isActive: course.isActive !== undefined ? course.isActive : true,
         isAvailable: course.isAvailable !== undefined ? course.isAvailable : true,
+        sessionTime: course.sessionTime || '',
+        location: course.location || '',
       });
       setImagePreview(course.imageUrl ? toAbsoluteMediaUrl(course.imageUrl) : '');
       setImageFile(null);
@@ -124,6 +130,8 @@ export default function AdminCoursesList() {
       formDataToSend.append('sortOrder', String(formData.sortOrder ?? 0));
       formDataToSend.append('isActive', String(formData.isActive !== false));
       formDataToSend.append('isAvailable', String(formData.isAvailable !== false));
+      formDataToSend.append('sessionTime', String(formData.sessionTime || ''));
+      formDataToSend.append('location', String(formData.location || ''));
 
       if (imageFile && imageFile instanceof File) {
         formDataToSend.append('image', imageFile);
@@ -349,6 +357,28 @@ export default function AdminCoursesList() {
                   multiline
                   rows={6}
                   helperText="Full description for details page (optional)"
+                />
+
+                <TextField
+                  fullWidth
+                  label="Session time"
+                  value={formData.sessionTime || ''}
+                  onChange={(e) => setFormData({ ...formData, sessionTime: e.target.value })}
+                  margin="normal"
+                  placeholder="e.g. 9:00 AM – 1:00 PM"
+                  helperText="Shown on the course page and in the confirmation email (optional)"
+                />
+
+                <TextField
+                  fullWidth
+                  label="Location"
+                  value={formData.location || ''}
+                  onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                  margin="normal"
+                  multiline
+                  rows={2}
+                  placeholder="Venue name and address"
+                  helperText="Shown on the course page and in the confirmation email (optional)"
                 />
 
                 <TextField
