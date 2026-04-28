@@ -158,8 +158,19 @@ function Header() {
             )}
           </div>
 
-          <button className="menu-toggle" onClick={toggleMenu} aria-label="Toggle menu">
-            <span className="menu-icon">≡</span>
+          <button
+            type="button"
+            className="menu-toggle"
+            onClick={toggleMenu}
+            aria-label="Toggle menu"
+            aria-expanded={isSideMenuOpen}
+            aria-controls="side-menu-panel"
+          >
+            <span className="menu-toggle-bars" aria-hidden="true">
+              <span className="menu-bar" />
+              <span className="menu-bar" />
+              <span className="menu-bar" />
+            </span>
           </button>
         </div>
       </header>
@@ -168,7 +179,10 @@ function Header() {
       <div className={`side-menu-overlay ${isSideMenuOpen ? 'open' : ''}`} onClick={closeMenu}></div>
 
       {/* Side Menu Panel */}
-      <div className={`side-menu-panel ${isSideMenuOpen ? 'open' : ''}`}>
+      <div
+        id="side-menu-panel"
+        className={`side-menu-panel ${isSideMenuOpen ? 'open' : ''}`}
+      >
         {/* Close Button */}
         <button className="close-btn" onClick={closeMenu} aria-label="Close menu">
           <span className="close-icon">×</span>

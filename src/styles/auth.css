@@ -184,9 +184,9 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 8px;
   width: 100%;
   letter-spacing: 0.3px;
+
 }
 
 .auth-button:hover:not(:disabled) {

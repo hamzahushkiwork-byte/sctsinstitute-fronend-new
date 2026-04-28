@@ -194,13 +194,18 @@ function Header() {
           </div>
 
           <button
+            type="button"
             className="menu-toggle"
             onClick={toggleMenu}
             aria-label="Toggle menu"
             aria-expanded={isSideMenuOpen}
             aria-controls="side-menu-panel"
           >
-            <span className="menu-icon">≡</span>
+            <span className="menu-toggle-bars" aria-hidden="true">
+              <span className="menu-bar" />
+              <span className="menu-bar" />
+              <span className="menu-bar" />
+            </span>
           </button>
         </div>
       </header>
