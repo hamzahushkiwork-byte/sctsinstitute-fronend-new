@@ -5,7 +5,8 @@
   left: 0;
   right: 0;
   z-index: 50;
-  background: transparent;
+  background: #ffffff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   transition:
     background-color 0.3s ease,
     box-shadow 0.3s ease;
@@ -25,7 +26,7 @@
 .header-inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 14px 24px;
+  padding: 0px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -60,13 +61,7 @@
   /* transition: filter 0.1s ease; */
 }
 
-/* Transparent header over hero: lightened logo */
-.header:not(.header-scrolled) .header-logo {
-  filter: invert(1) grayscale(20%) brightness(33.5) ;
-}
-
-/* Solid white bar: natural logo colors */
-.header.header-scrolled .header-logo {
+.header-logo {
   filter: none;
 }
 
@@ -128,7 +123,7 @@
   position: relative;
   font-size: 15px;
   font-weight: 500;
-  color: #ffffff;
+  color: #4a4f5c;
   text-decoration: none;
   letter-spacing: 0.02em;
   transition:
@@ -136,11 +131,6 @@
     transform 0.2s ease;
   padding: 0.5rem 0;
   display: inline-block;
-}
-
-/* Nav Link when header is scrolled (white background) */
-.header-scrolled .nav-link {
-  color: #4a4f5c;
 }
 
 /* Nav Link Underline Animation */
@@ -195,14 +185,10 @@
 
 .courses-nav-link {
   cursor: pointer;
-  color: #ffffff;
-}
-
-.header-scrolled .courses-nav-link {
   color: #4a4f5c;
 }
 
-.header-scrolled .courses-nav-link:hover {
+.courses-nav-link:hover {
   color: var(--color-theme-red);
 }
 
@@ -301,13 +287,13 @@
   width: 40px;
   height: 40px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(15, 23, 42, 0.08);
   backdrop-filter: blur(10px);
-  color: #ffffff;
+  color: #0f172a;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(15, 23, 42, 0.15);
   cursor: pointer;
   transition:
     transform 0.2s ease,
@@ -336,6 +322,7 @@
   font-size: 24px;
   font-weight: 300;
   line-height: 1;
+  color:#fff;
 }
 
 /* Overlay */
