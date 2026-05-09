@@ -56,6 +56,26 @@
   gap: 24px;
 }
 
+/* Home courses: up to 6 cards in a 3×2 grid on large screens */
+.home-highlight-courses .course-cards-grid--home {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 900px) {
+  .home-highlight-courses .course-cards-grid--home {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .home-highlight-courses .course-cards-grid--home {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 768px) {
   .home-highlight-section {
     padding: 56px 16px;

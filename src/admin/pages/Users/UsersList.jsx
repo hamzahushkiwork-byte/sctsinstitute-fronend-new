@@ -11,6 +11,25 @@ import { DataGrid } from '@mui/x-data-grid';
 import adminClient from '../../../api/adminClient.js';
 import PageTransition from '../../components/PageTransition.jsx';
 
+/** MUI X DataGrid v6+: valueGetter is (value, row, column, apiRef), not { row }. */
+function displayUserName(row) {
+  if (!row) return 'N/A';
+  const first = String(row.firstName ?? '').trim();
+  const last = String(row.lastName ?? '').trim();
+  if (first && last) return `${first} ${last}`;
+  if (first) return first;
+  if (last) return last;
+  const legacy = String(row.name ?? '').trim();
+  return legacy || 'N/A';
+}
+
+function displayPhone(row) {
+  if (!row) return 'N/A';
+  const raw = row.phoneNumber ?? row.phone;
+  const s = raw != null ? String(raw).trim() : '';
+  return s || 'N/A';
+}
+
 export default function UsersList() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -43,27 +62,18 @@ export default function UsersList() {
   };
 
   const columns = [
-    { 
-      field: 'name', 
-      headerName: 'Name', 
+    {
+      field: 'name',
+      headerName: 'Name',
       flex: 1,
-      valueGetter: (params) => {
-        if (!params || !params.row) return 'N/A';
-        if (params.row.firstName && params.row.lastName) {
-          return `${params.row.firstName} ${params.row.lastName}`;
-        }
-        return params.row.name || 'N/A';
-      }
+      valueGetter: (_value, row) => displayUserName(row),
     },
     { field: 'email', headerName: 'Email', flex: 1 },
-    { 
-      field: 'phoneNumber', 
-      headerName: 'Phone', 
+    {
+      field: 'phoneNumber',
+      headerName: 'Phone',
       flex: 1,
-      valueGetter: (params) => {
-        if (!params || !params.row) return 'N/A';
-        return params.row.phoneNumber || 'N/A';
-      }
+      valueGetter: (_value, row) => displayPhone(row),
     },
     {
       field: 'role',
@@ -117,18 +127,14 @@ export default function UsersList() {
           <DialogTitle>User Details</DialogTitle>
           <DialogContent>
             <Typography variant="subtitle2" gutterBottom sx={{ mt: 1 }}>
-              <strong>Name:</strong> {selectedUser?.firstName && selectedUser?.lastName 
-                ? `${selectedUser.firstName} ${selectedUser.lastName}`
-                : selectedUser?.name || 'N/A'}
+              <strong>Name:</strong> {selectedUser ? displayUserName(selectedUser) : 'N/A'}
             </Typography>
             <Typography variant="subtitle2" gutterBottom>
               <strong>Email:</strong> {selectedUser?.email}
             </Typography>
-            {selectedUser?.phoneNumber && (
-              <Typography variant="subtitle2" gutterBottom>
-                <strong>Phone:</strong> {selectedUser.phoneNumber}
-              </Typography>
-            )}
+            <Typography variant="subtitle2" gutterBottom>
+              <strong>Phone:</strong> {selectedUser ? displayPhone(selectedUser) : 'N/A'}
+            </Typography>
             <Typography variant="subtitle2" gutterBottom>
               <strong>Role:</strong>{' '}
               <Chip

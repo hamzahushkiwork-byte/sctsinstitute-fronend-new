@@ -366,6 +366,13 @@ function CourseDetails() {
     }
   };
 
+  const PENDING_PAYMENT_MESSAGE =
+    "Your registration will be confirmed once you complete the payment";
+
+  const isRegistrationPending =
+    !!registration &&
+    String(registration.status ?? "pending").toLowerCase().trim() === "pending";
+
   if (loading) {
     return <PageLoader isVisible={true} />;
   }
@@ -424,6 +431,20 @@ function CourseDetails() {
                         <div className="registration-note">
                           <strong>Note:</strong> {registration.notes}
                         </div>
+                      )}
+                      {isRegistrationPending && (
+                        <p
+                          className="course-pending-payment-hint"
+                          style={{
+                            marginTop: "12px",
+                            fontSize: "15px",
+                            lineHeight: 1.6,
+                            color: "#0f172a",
+                            fontWeight: 500,
+                          }}
+                        >
+                          {PENDING_PAYMENT_MESSAGE}
+                        </p>
                       )}
                       {isRegistrationRejected && (
                         <p
@@ -775,7 +796,9 @@ function CourseDetails() {
             ) : registration && !isRegistrationRejected ? (
               <div className="course-register-modal-body text-center">
                 <p className="course-register-modal-info">
-                  You are already registered for this course.
+                  {isRegistrationPending
+                    ? PENDING_PAYMENT_MESSAGE
+                    : "You are already registered for this course."}
                 </p>
                 <div className={`registration-status-banner ${getStatusDisplay(registration.status || "pending").className}`} style={{ justifyContent: 'center', marginTop: '16px' }}>
                    <span className="status-badge">

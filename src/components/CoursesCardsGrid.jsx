@@ -8,7 +8,12 @@ function CoursesCardsGrid({
   emptyMessage = 'No courses available at this time.',
   showHeader = false,
   showDemoUnavailable = false,
+  maxCards = null,
+  gridClassName = '',
 }) {
+  const rawList = Array.isArray(courses) ? courses : []
+  const list = maxCards != null ? rawList.slice(0, maxCards) : rawList
+
   const demoUnavailableCourse = showDemoUnavailable
     ? {
       slug: 'demo-unavailable',
@@ -20,9 +25,9 @@ function CoursesCardsGrid({
 
   // If we have real courses, we hide the demo one.
   // If we don't have real courses and showDemoUnavailable is true, we show the demo one.
-  const hasRealCourses = Array.isArray(courses) && courses.length > 0
+  const hasRealCourses = list.length > 0
   const displayedCourses = hasRealCourses
-    ? courses
+    ? list
     : (demoUnavailableCourse ? [demoUnavailableCourse] : [])
 
   if (loading) {
@@ -52,7 +57,9 @@ function CoursesCardsGrid({
         </div>
       )}
 
-      <div className="course-cards-grid">
+      <div
+        className={['course-cards-grid', gridClassName].filter(Boolean).join(' ')}
+      >
         {displayedCourses.map((course, index) => {
           const imageUrl = course.imageUrl ? toAbsoluteMediaUrl(course.imageUrl) : ''
           const courseSlug = course.slug || course._id || course.id

@@ -1,7 +1,7 @@
 import HeroSlider from '../components/HeroSlider'
 import WelcomeSection from '../components/WelcomeSection'
 import HomeHighlights from '../components/HomeHighlights'
-// import HeartSection from '../components/HeartSection'
+import HeartSection from '../components/HeartSection'
 import TrainingProgramsSection from '../components/TrainingProgramsSection'
 import HolisticApproachSection from '../components/HolisticApproachSection'
 
@@ -11,7 +11,7 @@ function Home() {
       <HeroSlider />
       <WelcomeSection />
       <HomeHighlights />
-      {/* <HeartSection /> */}
+      <HeartSection />
       <TrainingProgramsSection />
       <HolisticApproachSection />
     </div>

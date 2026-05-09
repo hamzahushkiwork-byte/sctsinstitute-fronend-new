@@ -12,6 +12,7 @@ import {
 import {
   Dashboard,
   Slideshow,
+  PhoneAndroid,
   BusinessCenter,
   School,
   Handshake,
@@ -22,6 +23,7 @@ import {
 
 const contentItems = [
   { text: 'Hero Slides', icon: Slideshow, path: '/admin/hero-slides' },
+  { text: 'Mobile Slides', icon: PhoneAndroid, path: '/admin/mobile-slides' },
   { text: 'Services', icon: BusinessCenter, path: '/admin/services' },
   { text: 'Courses & Programs', icon: School, path: '/admin/courses' },
   //   { text: 'Partners', icon: Handshake, path: '/admin/partners' },

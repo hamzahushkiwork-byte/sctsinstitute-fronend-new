@@ -6,6 +6,8 @@ import CoursesCardsGrid from './CoursesCardsGrid'
 import CertificationCardsGrid from './CertificationCardsGrid'
 import '../styles/home-highlights.css'
 
+const HOME_PAGE_COURSES_COUNT = 6
+
 function HomeHighlights() {
   const [courses, setCourses] = useState([])
   const [certifications, setCertifications] = useState([])
@@ -46,26 +48,27 @@ function HomeHighlights() {
     loadCertifications()
   }, [])
 
-  const homeCourses = courses.slice(0, 4)
   const homeCertifications = certifications.slice(0, 3)
 
   return (
     <div className="home-highlights" dir="rtl">
-      <section className="home-highlight-section">
+      <section className="home-highlight-section home-highlight-courses">
         <div className="home-highlight-header">
           <p className="home-highlight-eyebrow">Available courses</p>
           <h2 className="home-highlight-title">Choose the right course for you</h2>
         </div>
 
         <CoursesCardsGrid
-          courses={homeCourses}
+          courses={courses}
+          maxCards={HOME_PAGE_COURSES_COUNT}
+          gridClassName="course-cards-grid--home"
           loading={coursesLoading}
           emptyMessage="No courses available right now."
           showDemoUnavailable
         />
       </section>
 
-      <section className="home-highlight-section is-light">
+      {/* <section className="home-highlight-section is-light">
         <div className="home-highlight-header">
           <p className="home-highlight-eyebrow">Accredited certifications</p>
           <h2 className="home-highlight-title">Credentials that strengthen your career</h2>
@@ -79,7 +82,7 @@ function HomeHighlights() {
           loading={certsLoading}
           emptyMessage="No certifications available right now."
         />
-      </section>
+      </section> */}
     </div>
   )
 }
