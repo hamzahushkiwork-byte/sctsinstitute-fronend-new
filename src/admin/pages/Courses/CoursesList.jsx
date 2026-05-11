@@ -136,6 +136,12 @@ export default function CoursesList() {
     { field: 'category', headerName: 'Category', width: 150 },
     { field: 'level', headerName: 'Level', width: 120 },
     {
+      field: 'price',
+      headerName: 'Price',
+      width: 120,
+      renderCell: (params) => (params.value ? `$${params.value}` : 'Free'),
+    },
+    {
       field: 'isActive',
       headerName: 'Active',
       width: 100,
@@ -244,9 +250,11 @@ export default function CoursesList() {
               type="number"
               value={formData.price || ''}
               onChange={(e) =>
-                setFormData({ ...formData, price: e.target.value ? parseFloat(e.target.value) : null })
+                setFormData({ ...formData, price: e.target.value ? parseFloat(e.target.value) : 0 })
               }
               margin="normal"
+              inputProps={{ step: '0.01', min: '0' }}
+              helperText="Enter 0 for free courses"
             />
             <Box sx={{ mt: 2 }}>
               <TextField

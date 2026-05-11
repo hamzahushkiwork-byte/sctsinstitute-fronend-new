@@ -5,6 +5,7 @@ import Login from '../pages/Login.jsx';
 import DashboardHome from '../pages/DashboardHome.jsx';
 import HeroSlidesList from '../pages/HeroSlides/HeroSlidesList.jsx';
 import MobileSlidesList from '../pages/MobileSlides/MobileSlidesList.jsx';
+import TrendingCoursesList from '../pages/TrendingCourses/TrendingCoursesList.jsx';
 import ServicesList from '../pages/Services/ServicesList.jsx';
 import CoursesList from '../pages/Courses/CoursesList.jsx';
 import PartnersList from '../pages/Partners/PartnersList.jsx';
@@ -27,6 +28,8 @@ export default function AdminRoutes() {
         <Route path="hero-slides/:id" element={<HeroSlidesList />} />
         <Route path="mobile-slides" element={<MobileSlidesList />} />
         <Route path="mobile-slides/:id" element={<MobileSlidesList />} />
+        <Route path="trending-courses" element={<TrendingCoursesList />} />
+        <Route path="trending-courses/:id" element={<TrendingCoursesList />} />
         <Route path="services" element={<ServicesList />} />
         <Route path="services/:id" element={<ServicesList />} />
         <Route path="courses" element={<CoursesList />} />

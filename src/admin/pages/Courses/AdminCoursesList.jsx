@@ -78,6 +78,7 @@ export default function AdminCoursesList() {
     cardBody: '',
     description: '',
     sortOrder: 0,
+    price: 0,
     isActive: true,
     isAvailable: true, // ✅ added
     /** Sorted YYYY-MM-DD strings; sent as availableDates JSON array */
@@ -111,6 +112,7 @@ export default function AdminCoursesList() {
       cardBody: '',
       description: '',
       sortOrder: 0,
+      price: 0,
       isActive: true,
       isAvailable: true, // ✅ default
       availableDateKeys: [],
@@ -145,6 +147,7 @@ export default function AdminCoursesList() {
         cardBody: course.cardBody || '',
         description: course.description || '',
         sortOrder: course.sortOrder || 0,
+        price: course.price || 0,
         isActive: course.isActive !== undefined ? course.isActive : true,
         isAvailable: course.isAvailable !== undefined ? course.isAvailable : true, // ✅ added
         availableDateKeys: dateKeys,
@@ -187,6 +190,7 @@ export default function AdminCoursesList() {
       formDataToSend.append('cardBody', String(formData.cardBody || ''));
       formDataToSend.append('description', String(formData.description || ''));
       formDataToSend.append('sortOrder', String(formData.sortOrder ?? 0));
+      formDataToSend.append('price', String(formData.price ?? 0));
       formDataToSend.append('isActive', String(formData.isActive !== false));
       formDataToSend.append('isAvailable', String(formData.isAvailable !== false)); // ✅ added
 
@@ -303,6 +307,18 @@ export default function AdminCoursesList() {
       width: 200,
     },
     { field: 'sortOrder', headerName: 'Order', width: 100 },
+    {
+      field: 'price',
+      headerName: 'Price',
+      width: 120,
+      valueGetter: (params) => {
+        if (!params || !params.row) return 'Free';
+        const row = params.row;
+        if (row.price === undefined || row.price === null) return 'Free';
+        const price = Number(row.price);
+        return price === 0 ? 'Free' : `$${price.toFixed(2)}`;
+      },
+    },
 
     // ✅ Added column for status badge + toggle
     {
@@ -336,7 +352,7 @@ export default function AdminCoursesList() {
       headerName: 'Updated',
       width: 150,
       valueGetter: (params) => {
-        if (!params.row || !params.row.updatedAt) return '';
+        if (!params || !params.row || !params.row.updatedAt) return '';
         return new Date(params.row.updatedAt).toLocaleDateString();
       },
     },
@@ -470,6 +486,23 @@ export default function AdminCoursesList() {
                   onChange={(e) => setFormData({ ...formData, sortOrder: parseInt(e.target.value) || 0 })}
                   margin="normal"
                   helperText="Lower numbers appear first"
+                />
+
+                <TextField
+                  fullWidth
+                  label="Price"
+                  type="number"
+                  value={formData.price || 0}
+                  onChange={(e) => setFormData({ ...formData, price: parseFloat(e.target.value) || 0 })}
+                  margin="normal"
+                  helperText="Enter 0 for free courses"
+                  InputProps={{
+                    startAdornment: <span style={{ marginRight: '4px' }}>$</span>,
+                  }}
+                  inputProps={{
+                    min: 0,
+                    step: 0.01,
+                  }}
                 />
 
                 <Box sx={{ mt: 2, mb: 1 }}>

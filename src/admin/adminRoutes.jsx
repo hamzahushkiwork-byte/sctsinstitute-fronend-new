@@ -4,6 +4,8 @@ import AdminLayout from './AdminLayout.jsx';
 import AdminLogin from './AdminLogin.jsx';
 import DashboardPage from './DashboardPage.jsx';
 import HeroSlidesPage from './heroSlides/HeroSlidesPage.jsx';
+import MobileSlidesPage from './pages/MobileSlides/MobileSlidesPage.jsx';
+import TrendingCoursesList from './pages/TrendingCourses/TrendingCoursesList.jsx';
 import ServicesList from './pages/Services/ServicesList.jsx';
 import AdminCoursesList from './pages/Courses/AdminCoursesList.jsx';
 import PartnersList from './pages/Partners/PartnersList.jsx';
@@ -22,6 +24,8 @@ export default function AdminRoutes() {
         <Route element={<AdminLayout />}>
           <Route index element={<DashboardPage />} />
           <Route path="hero-slides/*" element={<HeroSlidesPage />} />
+          <Route path="mobile-slides" element={<MobileSlidesPage />} />
+          <Route path="trending-courses" element={<TrendingCoursesList />} />
           <Route path="services" element={<ServicesList />} />
           <Route path="services/:id" element={<ServicesList />} />
           <Route path="courses" element={<AdminCoursesList />} />

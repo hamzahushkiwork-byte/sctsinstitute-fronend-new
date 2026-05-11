@@ -18,6 +18,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import {
   Dashboard,
   Slideshow,
+  PhoneAndroid,
   BusinessCenter,
   School,
   Handshake,
@@ -28,6 +29,7 @@ import {
   Campaign,
   Assignment,
   Logout,
+  TrendingUp,
 } from '@mui/icons-material';
 import { Outlet } from 'react-router-dom';
 import { clearTokens } from './authStorage.js';
@@ -38,6 +40,8 @@ const drawerWidth = 280;
 const menuItems = [
   { text: 'Dashboard', icon: <Dashboard />, path: '/admin' },
   { text: 'Hero Slides', icon: <Slideshow />, path: '/admin/hero-slides' },
+  { text: 'Mobile Slides', icon: <PhoneAndroid />, path: '/admin/mobile-slides' },
+  { text: 'Trending Courses', icon: <TrendingUp />, path: '/admin/trending-courses' },
   { text: 'Services', icon: <BusinessCenter />, path: '/admin/services' },
   { text: 'Courses', icon: <School />, path: '/admin/courses' },
   { text: 'Partners', icon: <Handshake />, path: '/admin/partners' },
